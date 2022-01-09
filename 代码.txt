@@ -1,0 +1,317 @@
+#include<bits/stdc++.h>
+#include <windows.h> 
+using namespace std;
+
+
+typedef struct {
+	string name;
+	int person=0;
+}ZD;
+
+int location;
+string name;
+ZD temp;
+vector <ZD> ZZDT(5);
+vector <ZD> ZZDTBAK;
+vector <ZD> ZZDTBAK2;
+
+
+
+
+void Show(void);
+void Rll(void);
+void init(void);
+void Buy(void);
+void Function_for_admin(void);
+void Add(void);
+void Delete(void);
+void Update(void);
+void Function_for_user(void);
+void Pricetable(void); 
+void Maopao(void);
+void Charu(void);
+void Choose(void);
+int Buy2(int,int);
+
+
+int main(){
+	system("color fd");
+	system("title 郑州地铁（Zhengzhou Metro）管理系统 --by zinc");
+	init();
+	
+	int exit;
+	int choice;
+	int login;
+	while(1){
+	system("cls");
+	cout<<"------------------------------------------------------"<<endl;
+	cout<<"Welcome come to 郑州地铁（Zhengzhou Metro）管理系统"<<endl;
+	cout<<"请选择输入登录方式:"<<endl;
+	cout<<"1.管理员登录"<<endl;
+	cout<<"2.游客登录"<<endl;
+	cout<<"0.exit"<<endl;
+	cout<<"------------------------------------------------------"<<endl;	
+	cin>>login;
+	
+	if(0==login)return 0;
+	else if(2==login){
+	while(1){
+		Show();
+		Function_for_user();
+		cout<<"请输入您的选择:";
+		cin>>choice;
+		if(choice==0)break;
+		else{
+		switch(choice){
+			case 1:
+				Pricetable();
+				break;
+			case 2:
+				Buy();
+				break;
+		}
+	}
+}
+}
+else{
+	cout<<"请输入密钥:";
+	string miyao;
+	cin>>miyao;
+	if(miyao=="admin")
+	while(1){
+		Show();
+		Function_for_admin();
+		cout<<"请输入您的选择:";
+		cin>>choice;
+		if(0==choice)break;
+		else{
+		switch(choice){
+			case 1:
+				Pricetable();
+				break;
+			case 2:
+				Update();
+				break;
+			case 3:
+				Add();
+				break;
+			case 4:
+				Delete();
+				break;
+			case 5:
+				Rll();
+				system("pause");
+				break;
+		}
+	}
+}
+}
+}
+	//Pricetable();
+	//Add();
+	//Delete();
+	//for (int i=0;i<ZZDT.size();i++)
+	//cout<<ZZDT[i].name<<endl;
+	return 0;
+}
+
+void Show(){
+	system("cls");
+	cout<<"-----------------------------"<<endl;
+	cout<<"ZZDT总览:"<<endl;
+	for(int i=0;i<ZZDT.size();i++)
+	cout<<"["<<i<<"]"<<ZZDT[i].name<<endl;
+	cout<<"-----------------------------"<<endl;
+}
+
+void init(){
+	ZZDT[0].name="郑州火车站";
+	ZZDT[1].name="二七广场";
+	ZZDT[2].name="人民路";
+	ZZDT[3].name="紫荆山";
+	ZZDT[4].name="燕庄";
+	
+	ZZDT[0].person=222;
+	ZZDT[1].person=2525;
+	ZZDT[2].person=561;
+	ZZDT[3].person=321;
+	ZZDT[4].person=47333;
+
+}
+
+void Buy(){
+	int location1,location2,t=1,result;
+	Show();
+	cout<<"输入起始站点location:"<<endl;
+	cin>>location1;
+	cout<<"输入结束站点location:"<<endl;
+	cin>>location2;
+	result=1+ceil((abs(location2-location1)+1)*1.0/2);
+	cout<<"-------------------------------------"<<endl;
+	if(location2>location1){
+		cout<<"途径站点为:"<<endl;
+		for(int i=location1;i<=location2;i++){
+			cout<<ZZDT[i].name;
+			if(i!=location2)cout<<"->"; 
+		}
+	cout<<endl;
+	}
+	else{
+		cout<<"途径站点为:"<<endl;
+		for(int i=location1;i>=location2;i--){
+			cout<<ZZDT[i].name;
+			if(i!=location2) cout<<"->"; 
+	}
+	cout<<"-------------------------------------"<<endl;
+	cout<<endl;
+
+} 
+	ZZDT[location1].person++;
+	cout<<"价格为:"<<result<<"(元)"<<endl;
+	cout<<"-------------------------------------"<<endl;
+	system("pause");
+}
+
+
+void Function_for_user(){
+	cout<<"功能列表:"<<endl;
+	printf(
+	"===========================================\n"
+	"1.地铁站点查询\n"
+	"2.买票\n"
+	"0.退回登录界面\n"
+	"===========================================\n"
+	);
+}
+
+void Function_for_admin(){
+	cout<<"功能列表:"<<endl;
+	printf(
+	"===========================================\n"
+	"1.地铁站点查询\n"
+	"2.地铁站点修改\n"
+	"3.地铁站点增加\n"
+	"4.地铁站点删除\n"
+	"5.人流量查询\n"
+	"0.退回登录界面\n"
+	"===========================================\n" 
+	);
+	
+}
+
+void Add(){
+	Show();
+	cout<<"请输入添加站点的位置以及名字:"<<endl;
+	cin>>location>>temp.name;
+	ZZDT.insert(ZZDT.begin()+location,temp);
+	Show();
+}
+
+void Delete(){
+	Show();
+	cout<<"请输入要删除的location:"<<endl;
+	cin>>location;
+	ZZDT.erase(ZZDT.begin()+location);
+	Show();
+}
+
+void Update(){
+	Show();
+	cout<<"请输入要修改的location:"<<endl;
+	cin>>location;
+	cout<<"请输入要修改的名称"<<endl;
+	cin>>name;
+	ZZDT[location].name=name;
+	Show();
+}
+
+void Rll(){ //人流量 
+	cout<<"---------------------------------"<<endl; 
+	cout<<"人流量排序算法:"<<endl;
+	cout<<"---------------------------------"<<endl; 
+	cout<<"1.冒泡排序"<<endl;
+	cout<<"2.插入排序"<<endl; 
+	cout<<"3.选择排序"<<endl; 
+	cout<<"---------------------------------"<<endl;
+	cout<<"请选择排序算法:"<<endl;
+	int temp;
+	cin>>temp;
+	switch(temp){
+		case 1:
+			Maopao();
+			break;
+			case 2:
+				Charu();
+				break;
+					case 3:
+						Choose();
+						break;
+						
+	}
+	cout<<"人流量(以购票初始位置计算):"<<endl; 
+	for(int i=0;i<ZZDTBAK.size();i++)
+	cout<<ZZDTBAK[i].name<<":"<<ZZDTBAK[i].person<<endl;
+}
+
+void Pricetable(){
+	cout<<"请输入起始位置坐标:"<<endl;
+	cin>>location;
+	if(location>=ZZDT.size())cout<<"error!"<<endl;
+	else{
+	cout<<"-------------------------------------"<<endl;
+	cout<<"始发地->目标地:价格"<<endl; 
+	cout<<"-------------------------------------"<<endl;
+	for(int i=0;i<ZZDT.size();i++)
+	if(i!=location){
+	cout<<ZZDT[location].name<<"->"<<ZZDT[i].name<<":"<<1+ceil((abs(i-location)+1)*1.0/2)<<endl;		
+	}
+}
+	cout<<"-------------------------------------"<<endl;
+	system("pause");
+}
+
+void Maopao(){
+	ZZDTBAK.clear();
+	ZZDTBAK=ZZDT;
+	for(int i=0;i<ZZDTBAK.size()-1;i++)
+	for(int i=0;i<ZZDTBAK.size()-1;i++){
+		if(ZZDTBAK[i].person<ZZDTBAK[i+1].person){
+		swap(ZZDTBAK[i],ZZDTBAK[i+1]);
+	}
+	}
+	 
+}
+
+void Charu(){
+	ZZDTBAK.clear(); 
+	ZZDTBAK=ZZDT;
+        for(int i=1;i<ZZDTBAK.size();i++){
+                ZD key=ZZDTBAK[i];
+                int j=i-1;
+                while((j>=0) && (key.person<ZZDTBAK[j].person)){
+                        ZZDTBAK[j+1]=ZZDTBAK[j];
+                        j--;
+                }
+                ZZDTBAK[j+1]=key;
+        }
+        reverse(ZZDTBAK.begin(),ZZDTBAK.end());
+}
+
+void Choose(){
+	ZZDTBAK2=ZZDT;
+	ZZDTBAK.clear();
+	int tt=ZZDT.size();
+
+	while(tt--){
+	int max=-1,t=0;
+
+	for(int i=0;i<ZZDTBAK2.size();i++){
+		if(ZZDTBAK2[i].person>max){
+		max=ZZDTBAK2[i].person;
+		t=i;
+	}
+	}
+	ZZDTBAK.push_back(ZZDTBAK2[t]);
+	ZZDTBAK2.erase(ZZDTBAK2.begin()+t);
+}
+}
